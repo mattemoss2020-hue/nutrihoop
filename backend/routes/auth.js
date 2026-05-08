@@ -27,10 +27,11 @@ router.get('/whoop', requireAuthOrQuery, (req, res) => {
 
 router.get('/callback', async (req, res) => {
   const { code, error, state } = req.query;
-  if (error || !code) return res.redirect('/?auth=error');
+  const FRONTEND = process.env.FRONTEND_URL || 'http://localhost:5174';
+  if (error || !code) return res.redirect(`${FRONTEND}/?auth=error`);
 
   const userId = parseInt(state, 10);
-  if (!userId || isNaN(userId)) return res.redirect('/?auth=error');
+  if (!userId || isNaN(userId)) return res.redirect(`${FRONTEND}/?auth=error`);
 
   try {
     const params = new URLSearchParams({
@@ -44,10 +45,10 @@ router.get('/callback', async (req, res) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
     saveTokens(userId, data);
-    res.redirect('/?auth=success');
+    res.redirect(`${FRONTEND}/?auth=success`);
   } catch (err) {
     console.error('Auth callback error:', err.response?.data || err.message);
-    res.redirect('/?auth=error');
+    res.redirect(`${FRONTEND}/?auth=error`);
   }
 });
 
