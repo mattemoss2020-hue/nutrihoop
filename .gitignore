@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment
+.env
+backend/.env
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Build
+dist/
+frontend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite
+frontend/.vite/

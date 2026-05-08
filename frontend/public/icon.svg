@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0a0a0f"/>
+  <rect width="512" height="512" rx="112" fill="url(#g)"/>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Tennis ball lines -->
+  <circle cx="256" cy="256" r="160" fill="none" stroke="white" stroke-width="18" stroke-dasharray="none" opacity="0.15"/>
+  <!-- Tennis racket simplified -->
+  <ellipse cx="256" cy="230" rx="90" ry="110" fill="none" stroke="white" stroke-width="14"/>
+  <!-- Strings -->
+  <line x1="206" y1="140" x2="206" y2="320" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="236" y1="122" x2="236" y2="338" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="256" y1="120" x2="256" y2="340" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="276" y1="122" x2="276" y2="338" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="306" y1="140" x2="306" y2="320" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="170" y1="200" x2="342" y2="200" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="166" y1="230" x2="346" y2="230" stroke="white" stroke-width="4" opacity="0.6"/>
+  <line x1="170" y1="260" x2="342" y2="260" stroke="white" stroke-width="4" opacity="0.6"/>
+  <!-- Handle -->
+  <rect x="244" y="340" width="24" height="90" rx="12" fill="white"/>
+  <rect x="228" y="400" width="56" height="18" rx="9" fill="white" opacity="0.7"/>
+</svg>
