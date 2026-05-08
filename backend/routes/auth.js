@@ -13,13 +13,25 @@ function requireAuthOrQuery(req, res, next) {
   return requireAuth(req, res, next);
 }
 
+function encodeState(userId) {
+  const nonce = require('crypto').randomBytes(16).toString('hex');
+  return Buffer.from(`${userId}:${nonce}`).toString('base64url');
+}
+
+function decodeState(state) {
+  try {
+    const decoded = Buffer.from(state, 'base64url').toString('utf8');
+    return parseInt(decoded.split(':')[0], 10);
+  } catch { return null; }
+}
+
 function buildWhoopAuthUrl(userId) {
   const params = new URLSearchParams({
     client_id: process.env.WHOOP_CLIENT_ID,
     redirect_uri: process.env.WHOOP_REDIRECT_URI,
     response_type: 'code',
     scope: 'read:recovery read:cycles read:sleep read:workout read:body_measurement offline',
-    state: String(userId),
+    state: encodeState(userId),
   });
   return `https://api.prod.whoop.com/oauth/oauth2/auth?${params}`;
 }
@@ -39,7 +51,7 @@ router.get('/callback', async (req, res) => {
   const FRONTEND = process.env.FRONTEND_URL || 'http://localhost:5174';
   if (error || !code) return res.redirect(`${FRONTEND}/?auth=error`);
 
-  const userId = parseInt(state, 10);
+  const userId = decodeState(state);
   if (!userId || isNaN(userId)) return res.redirect(`${FRONTEND}/?auth=error`);
 
   try {
