@@ -136,6 +136,16 @@ export default function App() {
   const { data: liveData, loading: whoopLoading, error, whoopConnected, lastUpdated, refetch } = useWhoop();
   const [tab, setTab] = useState('ahora');
   const [demoMode, setDemoMode] = useState(false);
+  const connectWhoop = async () => {
+    try {
+      const res = await authFetch('/auth/whoop-url');
+      const json = await res.json();
+      if (json.url) window.location.href = json.url;
+    } catch (e) {
+      alert('Error al conectar Whoop');
+    }
+  };
+
   const onboardingKey = user ? `onboarding_done_${user.id}` : null;
   const [onboardingDone, setOnboardingDone] = useState(() => onboardingKey ? !!localStorage.getItem(onboardingKey) : true);
 
@@ -202,9 +212,9 @@ export default function App() {
                 <button onClick={() => setDemoMode(d => !d)} style={{ fontSize: 13, padding: '6px 14px', background: demoMode ? 'var(--accent-dim)' : 'var(--surface-2)', border: `1px solid ${demoMode ? 'var(--accent)' : 'var(--border)'}`, borderRadius: 8, color: demoMode ? '#a5b4fc' : 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>
                   {demoMode ? '✓ Demo' : 'Ver demo'}
                 </button>
-                <a href={`/auth/whoop?token=${token}`} style={{ fontSize: 13, padding: '6px 14px', background: 'var(--accent)', borderRadius: 8, color: 'white', textDecoration: 'none', fontWeight: 700 }}>
+                <button onClick={connectWhoop} style={{ fontSize: 13, padding: '6px 14px', background: 'var(--accent)', border: 'none', borderRadius: 8, color: 'white', cursor: 'pointer', fontWeight: 700 }}>
                   Conectar Whoop
-                </a>
+                </button>
               </div>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, borderLeft: '1px solid var(--border)', paddingLeft: 10 }}>
@@ -235,9 +245,9 @@ export default function App() {
               <button onClick={() => setDemoMode(true)} style={{ padding: '12px 28px', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', color: 'var(--text)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
                 Ver demo
               </button>
-              <a href={`/auth/whoop?token=${token}`} style={{ padding: '12px 28px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', borderRadius: 'var(--radius)', color: 'white', fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
+              <button onClick={connectWhoop} style={{ padding: '12px 28px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', borderRadius: 'var(--radius)', color: 'white', fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>
                 Conectar Whoop
-              </a>
+              </button>
             </div>
           </div>
         ) : (

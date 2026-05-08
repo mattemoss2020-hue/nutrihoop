@@ -13,16 +13,25 @@ function requireAuthOrQuery(req, res, next) {
   return requireAuth(req, res, next);
 }
 
-// User must be logged in to connect Whoop
-router.get('/whoop', requireAuthOrQuery, (req, res) => {
+function buildWhoopAuthUrl(userId) {
   const params = new URLSearchParams({
     client_id: process.env.WHOOP_CLIENT_ID,
     redirect_uri: process.env.WHOOP_REDIRECT_URI,
     response_type: 'code',
     scope: 'read:recovery read:cycles read:sleep read:workout read:body_measurement offline',
-    state: String(req.userId), // pass userId through OAuth state
+    state: String(userId),
   });
-  res.redirect(`https://api.prod.whoop.com/oauth/oauth2/auth?${params}`);
+  return `https://api.prod.whoop.com/oauth/oauth2/auth?${params}`;
+}
+
+// Browser redirect with token in query
+router.get('/whoop', requireAuthOrQuery, (req, res) => {
+  res.redirect(buildWhoopAuthUrl(req.userId));
+});
+
+// JSON endpoint for fetch-based flow
+router.get('/whoop-url', requireAuth, (req, res) => {
+  res.json({ url: buildWhoopAuthUrl(req.userId) });
 });
 
 router.get('/callback', async (req, res) => {
