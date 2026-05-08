@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://RAILWAY_URL/api/:path*" },
-    { "source": "/auth/:path*", "destination": "https://RAILWAY_URL/auth/:path*" }
+    { "source": "/api/:path*", "destination": "https://nutrihoop-production.up.railway.app/api/:path*" },
+    { "source": "/auth/:path*", "destination": "https://nutrihoop-production.up.railway.app/auth/:path*" }
   ]
 }
